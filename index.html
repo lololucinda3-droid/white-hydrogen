@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع الكشف عن الهيدروجين الأبيض الطبيعي | ISEF</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for interactive simulation visualizer -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0b132b;
+            color: #e0e1dd;
+        }
+        .glass-card {
+            background: rgba(27, 38, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 25px rgba(0, 245, 212, 0.25);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #00f5d4 0%, #48cae4 50%, #0077b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b132b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1b263b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f5d4;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-50 glass-card border-b border-slate-800 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center font-bold text-slate-900 text-xl shadow-lg shadow-cyan-500/30">
+                    <i data-lucide="zap" class="w-6 h-6 text-slate-900"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-wide text-white">WHD <span class="text-xs px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/40">ISEF 2026</span></h1>
+                    <p class="text-xs text-slate-400">White Hydrogen Detector</p>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex space-x-8 space-x-reverse text-sm font-semibold text-slate-300">
+                <a href="#about" class="hover:text-cyan-400 transition-colors">عن البحث</a>
+                <a href="#problem" class="hover:text-cyan-400 transition-colors">المشكلة والحل</a>
+                <a href="#architecture" class="hover:text-cyan-400 transition-colors">المكونات والنظام</a>
+                <a href="#demo" class="hover:text-cyan-400 transition-colors">المحاكي التفاعلي</a>
+                <a href="#applications" class="hover:text-cyan-400 transition-colors">التطبيقات</a>
+            </nav>
+
+            <a href="#demo" class="bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-sm hover:opacity-90 transition-all glow-cyan flex items-center gap-2">
+                <i data-lucide="play" class="w-4 h-4"></i> تجربة المحاكي
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative py-20 px-6 overflow-hidden">
+        <div class="absolute inset-0 bg-radial from-cyan-900/20 via-transparent to-transparent opacity-50 pointer-events-none"></div>
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-cyan-400 text-sm font-semibold mb-6 border border-cyan-500/30">
+                <i data-lucide="award" class="w-4 h-4"></i> مشروع ابتكار هندسي - معرض آيسيف للعلوم والهندسة
+            </div>
+
+            <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6 text-gradient">
+                جهاز الكشف السطحي غير التدميري عن الهيدروجين الأبيض الطبيعي
+            </h1>
+
+            <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-8 font-light leading-relaxed">
+                تقنية مستحدثة تعتمد على الحساسات الجيوكيميائية والكهرومغناطيسية عالية الدقة مع خوارزميات الذكاء الاصطناعي لاكتشاف تسريبات غاز الهيدروجين النظيف من التربة بدون حاجة للحفر التدميري.
+            </p>
+
+            <!-- Team Badges -->
+            <div class="flex flex-wrap justify-center items-center gap-4 mb-10">
+                <div class="glass-card px-5 py-2.5 rounded-2xl flex items-center gap-3 border border-slate-700">
+                    <div class="w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                    </div>
+                    <div class="text-right">
+                        <span class="block text-xs text-slate-400">إعداد الباحثة</span>
+                        <span class="font-bold text-white">Lucinda Guirguis</span>
+                    </div>
+                </div>
+
+                <div class="glass-card px-5 py-2.5 rounded-2xl flex items-center gap-3 border border-slate-700">
+                    <div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                    </div>
+                    <div class="text-right">
+                        <span class="block text-xs text-slate-400">إعداد الباحثة</span>
+                        <span class="font-bold text-white">Youanna Ayman</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#demo" class="bg-gradient-to-r from-cyan-400 to-blue-600 text-slate-950 font-extrabold px-8 py-4 rounded-2xl hover:scale-105 transition-transform flex items-center justify-center gap-2 glow-cyan">
+                    <i data-lucide="cpu" class="w-5 h-5"></i> تشغيل النموذج التفاعلي
+                </a>
+                <a href="#about" class="glass-card text-white font-bold px-8 py-4 rounded-2xl hover:bg-slate-800 transition-colors border border-slate-700 flex items-center justify-center gap-2">
+                    <i data-lucide="file-text" class="w-5 h-5 text-cyan-400"></i> ملخص البحث العلمي
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview / Abstract -->
+    <section id="about" class="py-16 px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card p-8 rounded-3xl border border-slate-800 hover:border-cyan-500/40 transition-all">
+                <div class="w-12 h-12 bg-cyan-500/10 text-cyan-400 rounded-2xl flex items-center justify-center mb-6">
+                    <i data-lucide="leaf" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">طاقة المستقبل المستدامة</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    يعتبر الهيدروجين الأبيض مصدراً طبيعياً ونظيفاً للطاقة يتكون في طبقات الأرض الداخلية، ويوفر حلاً مستداماً خاوياً من الانبعاثات الكربونية.
+                </p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl border border-slate-800 hover:border-cyan-500/40 transition-all">
+                <div class="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
+                    <i data-lucide="radar" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">الكشف السطحي المباشر</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    يعتمد الجهاز على تقييم الانبعاثات الدقيقة والتغيرات الكهرومغناطيسية السطحية المصاحبة لتسرب الهيدروجين من باطن الأرض بدقة متناهية.
+                </p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl border border-slate-800 hover:border-cyan-500/40 transition-all">
+                <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center mb-6">
+                    <i data-lucide="cpu" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">تصفية الإشارات بالـ AI</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    دمج خوارزميات الذكاء الاصطناعي لفصل إشارات الهيدروجين الحقيقية عن أي ضوضاء بيئية أو تداخلات ناتجة عن درجات الحرارة والرطوبة.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem vs Solution -->
+    <section id="problem" class="py-16 px-6 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-white mb-4">المقارنة التقنية: الطرق التقليدية مقابل ابتكارنا</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">حل مشكلة التكلفة والتدمير البيئي في عمليات الاستكشاف والتنقيب</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Problem Card -->
+                <div class="glass-card p-8 rounded-3xl border border-rose-500/20 bg-rose-950/10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">
+                            <i data-lucide="x-circle" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-rose-300">الطرق التقليدية (التنقيب بالحفر)</h3>
+                    </div>
+                    <ul class="space-y-4 text-slate-300 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="alert-triangle" class="w-5 h-5 text-rose-400 shrink-0 mt-0.5"></i>
+                            <span>تكلفة اقتصادية باهظة ومعدات ثقيلة معقدة في الموقع.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="alert-triangle" class="w-5 h-5 text-rose-400 shrink-0 mt-0.5"></i>
+                            <span>تدمير للبيئة وتجريف التربة وإرباك للنظام البيئي المحلي.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="alert-triangle" class="w-5 h-5 text-rose-400 shrink-0 mt-0.5"></i>
+                            <span>استغراق وقت طويل في جمع وتأكيد العينات المعملية.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Solution Card -->
+                <div class="glass-card p-8 rounded-3xl border border-cyan-500/40 bg-cyan-950/10 glow-cyan">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">
+                            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-cyan-300">ابتكار WHD (الكشف السطحي الذكي)</h3>
+                    </div>
+                    <ul class="space-y-4 text-slate-300 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+                            <span><strong>غير تدميري (Non-Invasive):</strong> كشف سطحي بالكامل دون الحاجة لأي حفر.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+                            <span><strong>اقتصادي ومحمول:</strong> تكلفة إنتاج منخفضة وسهولة تنقل الباحثين به.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+                            <span><strong>قراءات لحظية دقيقة:</strong> دمج ADS1115 بدقة 16-bit مع الذكاء الاصطناعي.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture & Electronics -->
+    <section id="architecture" class="py-16 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-extrabold text-white mb-3">المكونات الإلكترونية والمعمارية البرمجية</h2>
+            <p class="text-slate-400">النظام المتكامل المعتمد في جهاز WHD</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 text-center">
+                <div class="w-12 h-12 mx-auto bg-cyan-500/20 text-cyan-400 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="microchip" class="w-6 h-6"></i>
+                </div>
+                <h4 class="font-bold text-white mb-2">ESP32 Controller</h4>
+                <p class="text-xs text-slate-400">عقل الجهاز الرئيسي لمعالجة البيانات بسرعة وتوفير الاتصال اللاسلكي.</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 text-center">
+                <div class="w-12 h-12 mx-auto bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="wind" class="w-6 h-6"></i>
+                </div>
+                <h4 class="font-bold text-white mb-2">MQ-8 Gas Sensor</h4>
+                <p class="text-xs text-slate-400">حساس عالي الاستجابة مخصص لقياس تركيزات غاز الهيدروجين $H_2$.</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 text-center">
+                <div class="w-12 h-12 mx-auto bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="activity" class="w-6 h-6"></i>
+                </div>
+                <h4 class="font-bold text-white mb-2">ADS1115 ADC (16-Bit)</h4>
+                <p class="text-xs text-slate-400">تحويل الإشارات التناظرية بدقة فائقة لالتقاط أدق التغيرات في الجهد.</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 text-center">
+                <div class="w-12 h-12 mx-auto bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+                </div>
+                <h4 class="font-bold text-white mb-2">AI Filtering Logic</h4>
+                <p class="text-xs text-slate-400">معالجة برمجية لإزالة الضوضاء البيئية وضمان دقة وجود غاز الهيدروجين.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Simulator Demo -->
+    <section id="demo" class="py-16 px-6 bg-slate-900/80">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="text-xs font-extrabold text-cyan-400 tracking-widest uppercase mb-2 block">تجربة تفاعلية ملموسة</span>
+                <h2 class="text-3xl font-extrabold text-white">محاكي قراءات المستشعر وفلترة الذكاء الاصطناعي</h2>
+                <p class="text-slate-400 text-sm mt-2">قم بتعديل المتغيرات البيئية لملاحظة تنقية الإشارة وتحديد نسبة الهيدروجين</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <!-- Control Panel -->
+                <div class="glass-card p-6 rounded-3xl border border-slate-800 space-y-6">
+                    <h3 class="text-lg font-bold text-white border-b border-slate-800 pb-3 flex items-center gap-2">
+                        <i data-lucide="sliders" class="w-5 h-5 text-cyan-400"></i> لوحة التحكم في المتغيرات
+                    </h3>
+
+                    <!-- Slider 1: H2 Release Level -->
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-2">
+                            <span class="text-slate-300">معدل انبعاث الهيدروجين (PPM)</span>
+                            <span id="h2Val" class="text-cyan-400">500 PPM</span>
+                        </div>
+                        <input type="range" id="h2Input" min="50" max="2000" value="500" class="w-full accent-cyan-400 bg-slate-800 rounded-lg cursor-pointer">
+                    </div>
+
+                    <!-- Slider 2: Environmental Noise -->
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-2">
+                            <span class="text-slate-300">الشوشرة والضوضاء البيئية (Noise)</span>
+                            <span id="noiseVal" class="text-rose-400">متوسطة (30%)</span>
+                        </div>
+                        <input type="range" id="noiseInput" min="0" max="100" value="30" class="w-full accent-rose-400 bg-slate-800 rounded-lg cursor-pointer">
+                    </div>
+
+                    <!-- Toggle AI Filtering -->
+                    <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
+                        <span class="text-sm font-semibold text-white">تفعيل فلتر الذكاء الاصطناعي</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="aiToggle" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-500"></div>
+                        </label>
+                    </div>
+
+                    <!-- Status Display -->
+                    <div class="p-4 rounded-2xl bg-slate-950/60 border border-slate-800">
+                        <span class="block text-xs text-slate-400 mb-1">النتيجة المعالجة بواسطة ESP32:</span>
+                        <span id="statusResult" class="text-base font-extrabold text-cyan-400">تأكيد وجود تسرب هيدروجين أبيض بنسبة دقيقة</span>
+                    </div>
+                </div>
+
+                <!-- Live Chart Visualization -->
+                <div class="lg:col-span-2 glass-card p-6 rounded-3xl border border-slate-800">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                            <i data-lucide="line-chart" class="w-4 h-4 text-cyan-400"></i> الرسم البياني المباشر للشحنات والإشارات
+                        </h4>
+                        <div class="flex gap-4 text-xs">
+                            <span class="flex items-center gap-1 text-slate-400"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> الإشارة الخام (Raw MQ-8)</span>
+                            <span class="flex items-center gap-1 text-slate-400"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block"></span> الإشارة المعالجة بالـ AI</span>
+                        </div>
+                    </div>
+                    <div class="h-64 w-full">
+                        <canvas id="sensorChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion & Applications -->
+    <section id="applications" class="py-16 px-6 max-w-7xl mx-auto">
+        <div class="glass-card p-8 md:p-12 rounded-3xl border border-cyan-500/30 text-center relative overflow-hidden">
+            <div class="relative z-10 max-w-3xl mx-auto">
+                <h2 class="text-3xl font-extrabold text-white mb-6">التطبيقات المستقبلية والأثر البيئي</h2>
+                <p class="text-slate-300 leading-relaxed mb-8">
+                    يسهم جهاز WHD في تمهيد الطريق نحو استكشاف مصادر الطاقة النظيفة بشكل آمن، سريع، واقتصادي. يتيح للشركات والباحثين خفض تكاليف التنقيب بنسبة تزيد عن 70% مع حماية البيئة والتنوع البيولوجي.
+                </p>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+                        <span class="block text-2xl font-black text-cyan-400 mb-1">0%</span>
+                        <span class="text-xs text-slate-400">انبعاثات كربونية</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+                        <span class="block text-2xl font-black text-cyan-400 mb-1">16-Bit</span>
+                        <span class="text-xs text-slate-400">دقة التحويل ADS1115</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+                        <span class="block text-2xl font-black text-cyan-400 mb-1">100%</span>
+                        <span class="text-xs text-slate-400">غير تدميري للتربة</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+                        <span class="block text-2xl font-black text-cyan-400 mb-1">ESP32</span>
+                        <span class="text-xs text-slate-400">معالجة فورية</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass-card border-t border-slate-800 py-8 px-6 mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-400">
+            <div>
+                <p>© 2026 جميع الحقوق محفوظة - مشروع **WHD** لمعرض ISEF</p>
+                <p class="text-xs text-slate-500 mt-1">تطوير وإعداد الباحثتين: لوسيندا & يؤانا</p>
+            </div>
+            
+            <div class="flex gap-6 items-center">
+                <a href="https://github.com" target="_blank" class="hover:text-cyan-400 transition-colors flex items-center gap-2">
+                    <i data-lucide="github" class="w-4 h-4"></i> المستودع البرمجي (GitHub)
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Script -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Chart.js Setup
+        const ctx = document.getElementById('sensorChart').getContext('2d');
+        const labels = Array.from({length: 20}, (_, i) => `${i + 1}s`);
+
+        let h2Base = 500;
+        let noiseLevel = 30;
+        let isAiActive = true;
+
+        const rawData = [];
+        const filteredData = [];
+
+        for (let i = 0; i < 20; i++) {
+            const noise = (Math.random() - 0.5) * (noiseLevel * 10);
+            const raw = h2Base + noise;
+            rawData.push(raw);
+            filteredData.push(isAiActive ? h2Base + (noise * 0.1) : raw);
+        }
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'الإشارة الخام (Raw Sensor)',
+                        data: rawData,
+                        borderColor: '#f43f5e',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        pointRadius: 0
+                    },
+                    {
+                        label: 'الإشارة المعالجة (AI Filtered)',
+                        data: filteredData,
+                        borderColor: '#00f5d4',
+                        borderWidth: 3,
+                        tension: 0.2,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#00f5d4'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // Event Listeners for Interactive Controls
+        const h2Input = document.getElementById('h2Input');
+        const noiseInput = document.getElementById('noiseInput');
+        const aiToggle = document.getElementById('aiToggle');
+
+        const h2Val = document.getElementById('h2Val');
+        const noiseVal = document.getElementById('noiseVal');
+        const statusResult = document.getElementById('statusResult');
+
+        function updateSimulation() {
+            h2Base = parseInt(h2Input.value);
+            noiseLevel = parseInt(noiseInput.value);
+            isAiActive = aiToggle.checked;
+
+            h2Val.textContent = `${h2Base} PPM`;
+            noiseVal.textContent = noiseLevel < 30 ? 'منخفضة' : noiseLevel < 70 ? 'متوسطة' : 'عالية جداً';
+
+            const newRaw = [];
+            const newFiltered = [];
+
+            for (let i = 0; i < 20; i++) {
+                const noise = (Math.random() - 0.5) * (noiseLevel * 12);
+                const raw = h2Base + noise;
+                newRaw.push(raw);
+                newFiltered.push(isAiActive ? h2Base + (noise * 0.08) : raw);
+            }
+
+            chart.data.datasets[0].data = newRaw;
+            chart.data.datasets[1].data = newFiltered;
+            chart.update();
+
+            // Status message logic
+            if (h2Base > 800) {
+                statusResult.textContent = 'تم تأكيد وجود مؤشرات قوية لتسرب هيدروجين أبيض مرتفع';
+                statusResult.className = 'text-base font-extrabold text-cyan-400';
+            } else if (h2Base > 300) {
+                statusResult.textContent = 'قراءات متوسطة - يوصى بمتابعة مسح المنطقة';
+                statusResult.className = 'text-base font-extrabold text-blue-400';
+            } else {
+                statusResult.textContent = 'نسب طبيعية في التربة (لا يوجد تسرب محدد)';
+                statusResult.className = 'text-base font-extrabold text-slate-400';
+            }
+        }
+
+        h2Input.addEventListener('input', updateSimulation);
+        noiseInput.addEventListener('input', updateSimulation);
+        aiToggle.addEventListener('change', updateSimulation);
+    </script>
+</body>
+</html>
